@@ -51,6 +51,7 @@ export function usePresenter(slides) {
     })
     idx.value = nearest
     active.value = true
+    document.body.classList.add('present-mode')
     requestAnimationFrame(() => requestAnimationFrame(() => {
       update()
       document.documentElement.requestFullscreen?.().catch(() => {})
@@ -60,6 +61,7 @@ export function usePresenter(slides) {
   function exit() {
     if (!active.value) return
     active.value = false
+    document.body.classList.remove('present-mode')
     clearTimeout(hintTimer)
     // 清理 URL 入参
     try {

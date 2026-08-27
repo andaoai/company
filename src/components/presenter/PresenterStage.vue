@@ -1,5 +1,5 @@
 <template>
-  <div ref="stageRef" class="present-stage" aria-hidden="true">
+  <div :ref="(el) => onStage(el)" class="present-stage" aria-hidden="true">
     <div
       v-for="(s, i) in slides"
       :key="s.id"
@@ -34,9 +34,16 @@ const layoutMap = {
   'section-head-only': SectionHeadOnly,
 }
 
-defineProps({
+const props = defineProps({
   slides: { type: Array, required: true },
   idx: { type: Number, required: true },
-  stageRef: { type: Object, required: true }, // HTMLElement ref from usePresenter
+  stageRef: { type: Object, required: true }, // 父级 ref 对象，子组件用函数 ref 写回 DOM
 })
+
+// 函数 ref：把 stage DOM 元素直接写进父级的 ref.value
+function onStage(el) {
+  if (props.stageRef) {
+    props.stageRef.value = el
+  }
+}
 </script>
