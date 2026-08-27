@@ -857,6 +857,165 @@ ul { list-style: none; }
   .hero-stats { gap: 16px; }
 }
 
+/* ========== 演示按钮（nav 右侧） ========== */
+.nav-present {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: var(--gradient-soft);
+  border: 1px solid rgba(79, 143, 255, 0.3);
+  border-radius: 8px;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-present:hover {
+  border-color: var(--primary);
+  background: rgba(79, 143, 255, 0.15);
+}
+.nav-present .icon { width: 14px; height: 14px; }
+
+/* ========== 演示模式 UI（默认隐藏） ========== */
+.present-ui { display: none; }
+
+.present-counter {
+  position: fixed;
+  top: 20px;
+  right: 76px;
+  z-index: 300;
+  padding: 6px 14px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-2);
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: var(--text);
+}
+
+.present-exit {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 300;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-2);
+  border-radius: 50%;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.present-exit:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.present-exit .icon { width: 18px; height: 18px; }
+
+.present-progress {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  z-index: 300;
+}
+.present-progress-bar {
+  height: 100%;
+  background: var(--gradient);
+  width: 0%;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 12px rgba(79, 143, 255, 0.5);
+}
+
+.present-hint {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dimmer);
+  letter-spacing: 0.5px;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s;
+}
+.present-hint.fade { opacity: 0; }
+
+/* ========== 演示模式主体 ========== */
+body.present-mode {
+  overflow: hidden;
+  background: var(--bg);
+}
+body.present-mode .nav,
+body.present-mode .footer,
+body.present-mode .bg-glow { display: none; }
+
+body.present-mode .present-ui { display: block; }
+
+body.present-mode section[id] {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 60px 60px;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.96);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  z-index: 1;
+}
+body.present-mode section[id].active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+  z-index: 2;
+}
+
+/* 演示模式下扩大 container */
+body.present-mode .container {
+  max-width: 1280px;
+  width: 100%;
+  padding: 0 40px;
+}
+
+/* 演示模式下各 section 标题适当放大 */
+body.present-mode .section-head { margin-bottom: 48px; }
+body.present-mode .section-title { font-size: clamp(36px, 4.5vw, 56px); }
+
+/* 演示模式隐藏背景网格（更干净） */
+body.present-mode .bg-grid { opacity: 0.5; }
+
+/* 演示模式响应式 */
+@media (max-width: 900px) {
+  .nav-present span { display: none; }
+  .nav-present { padding: 8px; }
+  body.present-mode section[id] { padding: 70px 24px 50px; }
+  body.present-mode .container { padding: 0 20px; }
+  .present-counter { right: 64px; top: 16px; font-size: 11px; padding: 5px 10px; }
+  .present-exit { top: 12px; right: 12px; width: 36px; height: 36px; }
+  .present-hint { font-size: 10px; bottom: 10px; padding: 0 12px; }
+}
+
 /* ========== 隐藏浏览器滚动条（保留滚动能力） ========== */
 html {
   scrollbar-width: none;          /* Firefox */

@@ -69,6 +69,15 @@
       <symbol id="i-github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
       </symbol>
+      <symbol id="i-present" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 3h20"/>
+        <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/>
+        <path d="m7 21 5-5 5 5"/>
+        <path d="M12 16v5"/>
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6 6 18M6 6l12 12"/>
+      </symbol>
     </defs>
   </svg>
 
@@ -91,6 +100,10 @@
         <a href="#contact">联系</a>
       </nav>
       <a href="#contact" class="nav-cta">合作咨询 →</a>
+      <button class="nav-present" aria-label="进入演示模式" title="演示模式 (P 键)">
+        <svg class="icon"><use href="#i-present"/></svg>
+        <span>演示</span>
+      </button>
       <button class="nav-toggle" aria-label="切换菜单" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -385,6 +398,18 @@
     </div>
   </footer>
 
+  <!-- ========== 演示模式 UI ========== -->
+  <div class="present-ui" aria-hidden="true">
+    <div class="present-counter">
+      <span class="present-cur">1</span> / <span class="present-total">6</span>
+    </div>
+    <button class="present-exit" aria-label="退出演示">
+      <svg class="icon"><use href="#i-x"/></svg>
+    </button>
+    <div class="present-progress"><div class="present-progress-bar"></div></div>
+    <div class="present-hint">← → 切换 · 空格 下一页 · Esc 退出 · F 全屏</div>
+  </div>
+
   <script>
     // 平滑滚动
     document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -444,6 +469,133 @@
         }
       });
     }
+
+    // ========== 演示模式（PPT） ==========
+    const SLIDE_IDS = ['hero', 'about', 'team', 'tech', 'industry', 'contact'];
+    const slides = SLIDE_IDS.map(id => document.getElementById(id)).filter(Boolean);
+    const presentBtn = document.querySelector('.nav-present');
+    const presentExit = document.querySelector('.present-exit');
+    const presentCur = document.querySelector('.present-cur');
+    const presentTotal = document.querySelector('.present-total');
+    const presentBar = document.querySelector('.present-progress-bar');
+    const presentHint = document.querySelector('.present-hint');
+
+    let presentIdx = 0;
+    let hintTimer = null;
+
+    if (presentTotal) presentTotal.textContent = slides.length;
+
+    function updatePresent() {
+      slides.forEach((s, i) => s.classList.toggle('active', i === presentIdx));
+      if (presentCur) presentCur.textContent = presentIdx + 1;
+      const pct = ((presentIdx + 1) / slides.length) * 100;
+      if (presentBar) presentBar.style.width = pct + '%';
+      showHint();
+    }
+
+    function showHint() {
+      if (!presentHint) return;
+      presentHint.classList.remove('fade');
+      clearTimeout(hintTimer);
+      hintTimer = setTimeout(() => presentHint.classList.add('fade'), 3500);
+    }
+
+    function enterPresent() {
+      // 定位到当前最接近的 section 作为起始
+      const scrollY = window.scrollY + 100;
+      let nearest = 0;
+      slides.forEach((s, i) => { if (s.offsetTop <= scrollY) nearest = i; });
+      presentIdx = nearest;
+      document.body.classList.add('present-mode');
+      updatePresent();
+      // 尝试进入浏览器全屏
+      try {
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        }
+      } catch (e) { /* 忽略全屏失败 */ }
+    }
+
+    function exitPresent() {
+      document.body.classList.remove('present-mode');
+      clearTimeout(hintTimer);
+      if (document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function toggleFullscreen() {
+      if (document.fullscreenElement) {
+        document.exitFullscreen?.();
+      } else {
+        document.documentElement.requestFullscreen?.().catch(() => {});
+      }
+    }
+
+    if (presentBtn) presentBtn.addEventListener('click', enterPresent);
+    if (presentExit) presentExit.addEventListener('click', exitPresent);
+
+    // 浏览器 ESC 退出全屏时同步退出演示模式
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && document.body.classList.contains('present-mode')) {
+        // 用户用浏览器自带 ESC 退出全屏，但保留演示模式
+        // （避免误退出，加个轻提示）
+        showHint();
+      }
+    });
+
+    // 键盘控制
+    document.addEventListener('keydown', e => {
+      // 演示模式未开启时，P 键进入
+      if (!document.body.classList.contains('present-mode')) {
+        if ((e.key === 'p' || e.key === 'P') && !e.ctrlKey && !e.metaKey && !e.altKey) {
+          // 避免输入框里触发
+          const tag = (e.target.tagName || '').toLowerCase();
+          if (tag !== 'input' && tag !== 'textarea') {
+            e.preventDefault();
+            enterPresent();
+          }
+        }
+        return;
+      }
+      // 演示模式内
+      switch (e.key) {
+        case 'Escape':
+          e.preventDefault();
+          exitPresent();
+          break;
+        case 'ArrowRight':
+        case 'PageDown':
+        case ' ':
+          e.preventDefault();
+          if (presentIdx < slides.length - 1) { presentIdx++; updatePresent(); }
+          break;
+        case 'ArrowLeft':
+        case 'PageUp':
+          e.preventDefault();
+          if (presentIdx > 0) { presentIdx--; updatePresent(); }
+          break;
+        case 'Home':
+          e.preventDefault();
+          presentIdx = 0; updatePresent();
+          break;
+        case 'End':
+          e.preventDefault();
+          presentIdx = slides.length - 1; updatePresent();
+          break;
+        case 'f':
+        case 'F':
+          e.preventDefault();
+          toggleFullscreen();
+          break;
+        case '1': case '2': case '3': case '4': case '5': case '6':
+        case '7': case '8': case '9':
+          e.preventDefault();
+          const n = parseInt(e.key, 10) - 1;
+          if (n < slides.length) { presentIdx = n; updatePresent(); }
+          break;
+      }
+    });
   </script>
 </body>
 </html>
