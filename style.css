@@ -67,6 +67,23 @@ ul { list-style: none; }
   filter: blur(60px);
 }
 
+/* ========== 图标（SVG Sprite） ========== */
+.svg-sprite { display: none; }
+
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  color: currentColor;
+  width: 1em;
+  height: 1em;
+}
+
+.icon-xs { width: 14px; height: 14px; }
+.icon-sm { width: 18px; height: 18px; }
+.icon-md { width: 24px; height: 24px; }
+.icon-lg { width: 32px; height: 32px; }
+
 /* ========== 渐变文字 ========== */
 .gradient-text {
   background: var(--gradient);
@@ -322,9 +339,18 @@ ul { list-style: none; }
 }
 
 .card-icon {
-  font-size: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
   margin-bottom: 20px;
+  border-radius: 10px;
+  background: var(--gradient-soft);
+  color: var(--primary);
+  font-size: 32px;
 }
+.card-icon .icon { width: 22px; height: 22px; }
 
 .about-card h3 {
   font-size: 18px;
@@ -502,12 +528,17 @@ ul { list-style: none; }
 
 .tech-item:last-child { border-bottom: none; }
 
-.tech-item h4 {
+.tech-item h4,
+.tech-item .tech-title {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 8px;
   color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
+.tech-item .tech-title .icon { color: var(--primary); }
 
 .tech-item p {
   color: var(--text-dim);
@@ -548,9 +579,18 @@ ul { list-style: none; }
 }
 
 .ind-icon {
-  font-size: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
   margin-bottom: 16px;
+  border-radius: 10px;
+  background: var(--gradient-soft);
+  color: var(--primary);
+  font-size: 32px;
 }
+.ind-icon .icon { width: 22px; height: 22px; }
 
 .industry-card h4 {
   font-size: 16px;
@@ -604,7 +644,9 @@ ul { list-style: none; }
 }
 
 .contact-link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: var(--cyan);
   font-size: 14px;
   font-family: 'JetBrains Mono', monospace;
@@ -662,6 +704,9 @@ ul { list-style: none; }
 .footer-right a {
   color: var(--text-dim);
   transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .footer-right a:hover { color: var(--primary); }

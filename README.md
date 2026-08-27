@@ -46,3 +46,4 @@ company/
 - 字体：Google Fonts (Inter / JetBrains Mono)
 - 响应式：桌面 / 平板 / 手机三档断点
 - 风格对标 DeepSeek，深色科技感
+- 图标：[Lucide](https://lucide.dev) 风格内联 SVG（MIT License），单一 sprite 文件，零外链
