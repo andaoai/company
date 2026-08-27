@@ -519,6 +519,12 @@
     function exitPresent() {
       document.body.classList.remove('present-mode');
       clearTimeout(hintTimer);
+      // 清理 URL 上的入参，恢复干净地址
+      try {
+        if (location.hash.toLowerCase().startsWith('#present') || /[?&]present\b/i.test(location.search)) {
+          history.replaceState(null, '', location.pathname + location.search.replace(/[?&]present=[^&]*/i, '').replace(/[?&]present\b/i, ''));
+        }
+      } catch (e) { /* 忽略 */ }
       if (document.fullscreenElement && document.exitFullscreen) {
         document.exitFullscreen().catch(() => {});
       }
@@ -544,20 +550,9 @@
       }
     });
 
-    // 键盘控制
+    // 键盘控制（仅在演示模式内生效，不再支持外部快捷键进入）
     document.addEventListener('keydown', e => {
-      // 演示模式未开启时，P 键进入
-      if (!document.body.classList.contains('present-mode')) {
-        if ((e.key === 'p' || e.key === 'P') && !e.ctrlKey && !e.metaKey && !e.altKey) {
-          // 避免输入框里触发
-          const tag = (e.target.tagName || '').toLowerCase();
-          if (tag !== 'input' && tag !== 'textarea') {
-            e.preventDefault();
-            enterPresent();
-          }
-        }
-        return;
-      }
+      if (!document.body.classList.contains('present-mode')) return;
       // 演示模式内
       switch (e.key) {
         case 'Escape':
@@ -594,6 +589,39 @@
           const n = parseInt(e.key, 10) - 1;
           if (n < slides.length) { presentIdx = n; updatePresent(); }
           break;
+      }
+    });
+
+    // ========== URL 入参自动进入 ==========
+    // 支持以下任一形式：
+    //   https://andaoai.github.io/#present
+    //   https://andaoai.github.io/?present
+    //   https://andaoai.github.io/?present=1
+    //   https://andaoai.github.io/?present&slide=3 (可扩展)
+    function checkPresentURL() {
+      const hash = location.hash.toLowerCase();
+      const search = location.search.toLowerCase();
+      const wantsPresent =
+        hash.startsWith('#present') ||
+        /[?&]present(\b|=)/.test(search);
+      if (wantsPresent && !document.body.classList.contains('present-mode')) {
+        // 微延迟确保 layout 计算完成
+        setTimeout(enterPresent, 50);
+      }
+    }
+    // 页面加载完成时检查
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', checkPresentURL);
+    } else {
+      checkPresentURL();
+    }
+    // 浏览器前进/后退时也响应
+    window.addEventListener('hashchange', () => {
+      const wantsPresent = location.hash.toLowerCase().startsWith('#present');
+      if (wantsPresent && !document.body.classList.contains('present-mode')) {
+        setTimeout(enterPresent, 50);
+      } else if (!wantsPresent && document.body.classList.contains('present-mode')) {
+        exitPresent();
       }
     });
   </script>
