@@ -26,10 +26,18 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        with:
+          # 自动启用 Pages（解决首次运行的 404 错误）
+          enablement: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
