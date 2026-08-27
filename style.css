@@ -521,6 +521,19 @@ ul { list-style: none; }
   font-weight: 600;
 }
 
+/* 单列全宽版（用于 tech-self / tech-vendor 章节，避免 PPT 单页溢出） */
+.tech-col-full {
+  max-width: 820px;
+  margin: 0 auto;
+}
+.tech-col-full .tech-item {
+  padding: 24px 0;
+}
+.tech-col-full .tech-item p {
+  font-size: 15px;
+  line-height: 1.75;
+}
+
 .tech-item {
   padding: 20px 0;
   border-bottom: 1px dashed var(--border);
