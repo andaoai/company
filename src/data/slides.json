@@ -144,6 +144,35 @@
       ]
     },
     {
+      "id": "opensource",
+      "layout": "grid-2",
+      "alt": true,
+      "kicker": "03C / 技术基底",
+      "title": "已开源 GitHub，",
+      "titleAccent": "持续申请软件著作权。",
+      "desc": "公司核心技术资产已开源到 GitHub，并已启动软件著作权申请。",
+      "cards": [
+        {
+          "icon": "cpu",
+          "title": "go-infer · 通用机器学习推理平台",
+          "url": "https://github.com/andaoai/go-infer",
+          "problem": "传统推理服务与特定算法框架强耦合，迁移和扩展成本高；模型上线后缺少数据回流闭环，难以持续优化。go-infer 用 Go 高并发实现跨框架跨算法的通用推理平台，已内置 YOLOv8 检测/分割示范引擎，配套数据集校验、推理采集回流、模型迭代闭环能力。",
+          "value": "让企业从'部署一个模型'升级为'持续迭代的推理能力'，是公司所有视觉类产品的工程底座。",
+          "tag": "Go · 推理 · 闭环",
+          "softCopyright": true
+        },
+        {
+          "icon": "tag",
+          "title": "yolo-label-vs · 数据标注平台",
+          "url": "https://github.com/andaoai/yolo-label-vs",
+          "problem": "数据标注是 AI 落地的'第一公里'。商业标注工具按席位收费、数据无法私有；通用开源工具对工程团队不够友好、格式碎片化。yolo-label-vs 提供基于 VSCode 的轻量方案，让工程师在自己熟悉的编辑器里完成 YOLO 格式标注，标注数据本地化、格式标准化、操作可视化。",
+          "value": "是公司数据闭环的关键工具，也是面向客户交付标注能力的基础组件。",
+          "tag": "VSCode · 标注 · YOLO",
+          "softCopyright": true
+        }
+      ]
+    },
+    {
       "id": "industry",
       "layout": "grid-4",
       "alt": true,

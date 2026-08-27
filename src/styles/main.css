@@ -570,6 +570,112 @@ ul { list-style: none; }
   display: inline-block;
 }
 
+/* ========== Tech Base（开源项目/技术基底） ========== */
+.tech-base-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.tech-base-card {
+  padding: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+.tech-base-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(79, 143, 255, 0.1);
+}
+.tech-base-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.tech-problem {
+  background: var(--bg-alt);
+  border-left: 2px solid var(--primary);
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+.problem-label {
+  display: inline-block;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 1px;
+  color: var(--primary);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.tech-problem p {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.7;
+  margin: 0;
+}
+.tech-value-text {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+.tech-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.tech-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--gradient-soft);
+  border: 1px solid rgba(79, 143, 255, 0.3);
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+.tech-softcopy {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: rgba(0, 212, 255, 0.08);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 100px;
+  font-size: 11px;
+  color: var(--cyan);
+  letter-spacing: 0.5px;
+}
+.tech-url {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: transparent;
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  transition: all 0.2s;
+  margin-top: auto;
+  align-self: flex-start;
+}
+.tech-url:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(79, 143, 255, 0.08);
+}
+
 /* ========== Industry ========== */
 .industry-grid {
   display: grid;
@@ -798,6 +904,7 @@ ul { list-style: none; }
   .contact-grid,
   .tech-cols { grid-template-columns: 1fr; }
   .industry-grid { grid-template-columns: repeat(2, 1fr); }
+  .tech-base-grid { grid-template-columns: 1fr; }
 
   /* 紧凑内边距 */
   .section { padding: 80px 0; }

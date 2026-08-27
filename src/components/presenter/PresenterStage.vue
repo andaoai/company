@@ -20,6 +20,7 @@ import HeroSection from '../sections/HeroSection.vue'
 import AboutSection from '../sections/AboutSection.vue'
 import TeamSection from '../sections/TeamSection.vue'
 import TechSection from '../sections/TechSection.vue'
+import TechBaseSection from '../sections/TechBaseSection.vue'
 import IndustrySection from '../sections/IndustrySection.vue'
 import ContactSection from '../sections/ContactSection.vue'
 import SectionHeadOnly from '../sections/SectionHeadOnly.vue'
@@ -30,6 +31,7 @@ const layoutMap = {
   'grid-3-person': TeamSection,
   'grid-4': IndustrySection,
   'grid-3-contact': ContactSection,
+  'grid-2': TechBaseSection,
   'tech-list': TechSection,
   'section-head-only': SectionHeadOnly,
 }
