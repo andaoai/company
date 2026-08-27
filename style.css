@@ -954,55 +954,74 @@ ul { list-style: none; }
 }
 .present-hint.fade { opacity: 0; }
 
-/* ========== 演示模式主体 ========== */
-body.present-mode {
-  overflow: hidden;
-  background: var(--bg);
-}
-body.present-mode .nav,
-body.present-mode .footer,
-body.present-mode .bg-glow { display: none; }
+/* ========== 演示模式：固定 16:9 画布架构 ========== */
 
-body.present-mode .present-ui { display: block; }
-
-body.present-mode section[id] {
+/* === Stage：全视口黑色容器 === */
+.present-stage {
+  display: none;
   position: fixed;
   inset: 0;
-  display: flex;
+  z-index: 250;
+  background: #000;
   align-items: center;
   justify-content: center;
-  padding: 80px 60px 60px;
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.96);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  z-index: 1;
+  overflow: hidden;
 }
-body.present-mode section[id].active {
-  opacity: 1;
-  pointer-events: auto;
-  transform: scale(1);
-  z-index: 2;
-}
+body.present-mode .present-stage { display: flex; }
 
-/* 演示模式下扩大 container */
-body.present-mode .container {
-  max-width: 1280px;
+/* === Slide：固定 1600×900 画布（JS transform: scale 适配视口） === */
+.present-slide {
+  width: 1600px;
+  height: 900px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+  display: none;
+  transform-origin: center center;
+  /* transform 由 JS 设置 */
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
+}
+.present-slide.active { display: block; }
+
+/* === Slide 内 section：填满 1600×900 画布 === */
+.slide-section {
   width: 100%;
-  padding: 0 40px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 50px 80px;
+  position: relative;
+  overflow: hidden;
 }
+.slide-section.section-alt { background: var(--bg-alt); }
 
-/* 演示模式下各 section 标题适当放大 */
-body.present-mode .section-head { margin-bottom: 48px; }
-body.present-mode .section-title { font-size: clamp(36px, 4.5vw, 56px); }
+/* 容器在 slide 内扩到 1400 居中 */
+.slide-section .container {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+.slide-section .section-head { margin-bottom: 36px; text-align: center; }
+.slide-section .section-title { font-size: clamp(40px, 4.5vw, 60px); }
+.slide-section .section-desc { font-size: 17px; }
 
-/* 演示模式隐藏背景网格（更干净） */
-body.present-mode .bg-grid { opacity: 0.5; }
+/* === 隐藏原网页内容（演示模式下不显示） === */
+body.present-mode {
+  overflow: hidden;
+  background: #000;
+}
+body.present-mode > section,
+body.present-mode > header.nav,
+body.present-mode > footer,
+body.present-mode > .bg-grid,
+body.present-mode > .bg-glow { display: none !important; }
+body.present-mode .present-ui { display: block; }
 
-/* 演示模式响应式 */
+/* === 演示模式响应式（仅 UI 元素位置） === */
 @media (max-width: 900px) {
-  body.present-mode section[id] { padding: 70px 24px 50px; }
-  body.present-mode .container { padding: 0 20px; }
   .present-counter { right: 64px; top: 16px; font-size: 11px; padding: 5px 10px; }
   .present-exit { top: 12px; right: 12px; width: 36px; height: 36px; }
   .present-hint { font-size: 10px; bottom: 10px; padding: 0 12px; }

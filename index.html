@@ -397,7 +397,7 @@
   <!-- ========== 演示模式 UI ========== -->
   <div class="present-ui" aria-hidden="true">
     <div class="present-counter">
-      <span class="present-cur">1</span> / <span class="present-total">6</span>
+      <span class="present-cur">1</span> / <span class="present-total">8</span>
     </div>
     <button class="present-exit" aria-label="退出演示">
       <svg class="icon"><use href="#i-x"/></svg>
@@ -405,6 +405,9 @@
     <div class="present-progress"><div class="present-progress-bar"></div></div>
     <div class="present-hint">← → 切换 · 空格 下一页 · Esc 退出 · F 全屏</div>
   </div>
+
+  <!-- ========== 演示模式 stage（JS 动态构建固定 16:9 幻灯片） ========== -->
+  <div class="present-stage" aria-hidden="true"></div>
 
   <script>
     // 平滑滚动
@@ -466,27 +469,63 @@
       });
     }
 
-    // ========== 演示模式（PPT） ==========
+    // ========== 演示模式（PPT · 固定 16:9 画布架构） ==========
     const SLIDE_IDS = ['hero', 'about', 'team', 'tech', 'tech-self', 'tech-vendor', 'industry', 'contact'];
-    const slides = SLIDE_IDS.map(id => document.getElementById(id)).filter(Boolean);
+    const SLIDE_W = 1600;  // 固定画布宽度
+    const SLIDE_H = 900;   // 固定画布高度（16:9）
     const presentBtn = document.querySelector('.nav-present');
     const presentExit = document.querySelector('.present-exit');
     const presentCur = document.querySelector('.present-cur');
     const presentTotal = document.querySelector('.present-total');
     const presentBar = document.querySelector('.present-progress-bar');
     const presentHint = document.querySelector('.present-hint');
+    const presentStage = document.querySelector('.present-stage');
 
     let presentIdx = 0;
     let hintTimer = null;
 
-    if (presentTotal) presentTotal.textContent = slides.length;
+    if (presentTotal) presentTotal.textContent = SLIDE_IDS.length;
+
+    // === 核心：把原网页 section 克隆成固定 16:9 幻灯片 ===
+    function buildSlides() {
+      if (!presentStage) return;
+      presentStage.innerHTML = '';
+      SLIDE_IDS.forEach((id, i) => {
+        const src = document.getElementById(id);
+        if (!src) return;
+        const slide = document.createElement('div');
+        slide.className = 'present-slide';
+        slide.dataset.slide = String(i);
+        slide.dataset.slideId = id;
+        const clone = src.cloneNode(true);
+        clone.removeAttribute('id');
+        clone.classList.add('slide-section');
+        // 克隆内部所有 id 也清掉，避免 DOM 重复
+        clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+        slide.appendChild(clone);
+        presentStage.appendChild(slide);
+      });
+    }
+
+    // === 核心：把当前活跃 slide 按视口大小整体缩放（保持 16:9） ===
+    function fitSlide() {
+      if (!presentStage) return;
+      const slide = presentStage.querySelector('.present-slide.active');
+      if (!slide) return;
+      const sw = presentStage.clientWidth;
+      const sh = presentStage.clientHeight;
+      const s = Math.min(sw / SLIDE_W, sh / SLIDE_H);
+      slide.style.transform = `scale(${s})`;
+    }
 
     function updatePresent() {
-      slides.forEach((s, i) => s.classList.toggle('active', i === presentIdx));
+      if (!presentStage) return;
+      presentStage.querySelectorAll('.present-slide').forEach((s, i) =>
+        s.classList.toggle('active', i === presentIdx));
       if (presentCur) presentCur.textContent = presentIdx + 1;
-      const pct = ((presentIdx + 1) / slides.length) * 100;
-      if (presentBar) presentBar.style.width = pct + '%';
+      if (presentBar) presentBar.style.width = ((presentIdx + 1) / SLIDE_IDS.length) * 100 + '%';
       showHint();
+      fitSlide();
     }
 
     function showHint() {
@@ -497,32 +536,40 @@
     }
 
     function enterPresent() {
-      // 定位到当前最接近的 section 作为起始
+      // 从当前滚动位置推断起始 slide
       const scrollY = window.scrollY + 100;
       let nearest = 0;
-      slides.forEach((s, i) => { if (s.offsetTop <= scrollY) nearest = i; });
+      SLIDE_IDS.forEach((id, i) => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollY) nearest = i;
+      });
       presentIdx = nearest;
+      buildSlides();
       document.body.classList.add('present-mode');
-      updatePresent();
-      // 尝试进入浏览器全屏
-      try {
-        if (document.documentElement.requestFullscreen) {
-          document.documentElement.requestFullscreen().catch(() => {});
-        }
-      } catch (e) { /* 忽略全屏失败 */ }
+      // 等两帧再 fit + 全屏，确保 layout 稳定
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        updatePresent();
+        try {
+          document.documentElement.requestFullscreen?.().catch(() => {});
+        } catch (e) {}
+      }));
     }
 
     function exitPresent() {
       document.body.classList.remove('present-mode');
       clearTimeout(hintTimer);
-      // 清理 URL 上的入参，恢复干净地址
+      // 清空 stage，释放克隆的 DOM
+      if (presentStage) presentStage.innerHTML = '';
+      // 清理 URL 入参
       try {
-        if (location.hash.toLowerCase().startsWith('#present') || /[?&]present\b/i.test(location.search)) {
-          history.replaceState(null, '', location.pathname + location.search.replace(/[?&]present=[^&]*/i, '').replace(/[?&]present\b/i, ''));
+        if (location.hash.toLowerCase().startsWith('#present') ||
+            /[?&]present(\b|=)/i.test(location.search)) {
+          history.replaceState(null, '', location.pathname +
+            location.search.replace(/[?&]present=[^&]*/i, '').replace(/[?&]present\b/i, ''));
         }
-      } catch (e) { /* 忽略 */ }
-      if (document.fullscreenElement && document.exitFullscreen) {
-        document.exitFullscreen().catch(() => {});
+      } catch (e) {}
+      if (document.fullscreenElement) {
+        document.exitFullscreen?.().catch(() => {});
       }
     }
 
@@ -534,22 +581,24 @@
       }
     }
 
+    // 事件绑定
     if (presentBtn) presentBtn.addEventListener('click', enterPresent);
     if (presentExit) presentExit.addEventListener('click', exitPresent);
 
-    // 浏览器 ESC 退出全屏时同步退出演示模式
+    // resize 时重新计算缩放
+    window.addEventListener('resize', () => {
+      if (document.body.classList.contains('present-mode')) fitSlide();
+    });
+    // 浏览器全屏切换时也重新 fit
     document.addEventListener('fullscreenchange', () => {
-      if (!document.fullscreenElement && document.body.classList.contains('present-mode')) {
-        // 用户用浏览器自带 ESC 退出全屏，但保留演示模式
-        // （避免误退出，加个轻提示）
-        showHint();
+      if (document.body.classList.contains('present-mode')) {
+        setTimeout(fitSlide, 100);
       }
     });
 
-    // 键盘控制（仅在演示模式内生效，不再支持外部快捷键进入）
+    // 键盘控制（仅演示模式内生效）
     document.addEventListener('keydown', e => {
       if (!document.body.classList.contains('present-mode')) return;
-      // 演示模式内
       switch (e.key) {
         case 'Escape':
           e.preventDefault();
@@ -559,7 +608,7 @@
         case 'PageDown':
         case ' ':
           e.preventDefault();
-          if (presentIdx < slides.length - 1) { presentIdx++; updatePresent(); }
+          if (presentIdx < SLIDE_IDS.length - 1) { presentIdx++; updatePresent(); }
           break;
         case 'ArrowLeft':
         case 'PageUp':
@@ -572,7 +621,7 @@
           break;
         case 'End':
           e.preventDefault();
-          presentIdx = slides.length - 1; updatePresent();
+          presentIdx = SLIDE_IDS.length - 1; updatePresent();
           break;
         case 'f':
         case 'F':
@@ -583,7 +632,7 @@
         case '7': case '8': case '9':
           e.preventDefault();
           const n = parseInt(e.key, 10) - 1;
-          if (n < slides.length) { presentIdx = n; updatePresent(); }
+          if (n < SLIDE_IDS.length) { presentIdx = n; updatePresent(); }
           break;
       }
     });
