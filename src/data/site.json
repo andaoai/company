@@ -1,0 +1,23 @@
+{
+  "title": "安道智能 | 扎根茂名的AI技术落地者",
+  "description": "安道智能 — 指导数据化，迈向智能化。扎根茂名产业，提供工业视觉检测、智能体平台、数据标注与系统集成服务。",
+  "logo": {
+    "mark": "A",
+    "text": "安道智能"
+  },
+  "nav": [
+    { "label": "关于", "href": "#about" },
+    { "label": "团队", "href": "#team" },
+    { "label": "技术", "href": "#tech" },
+    { "label": "行业", "href": "#industry" },
+    { "label": "联系", "href": "#contact" }
+  ],
+  "footer": {
+    "copyright": "安道智能 © 2026 · 扎根茂名的 AI 技术落地者",
+    "links": [
+      { "label": "GitHub", "href": "https://github.com/andaoai", "icon": "github", "external": true },
+      { "label": "Icons by Lucide", "href": "https://lucide.dev", "external": true },
+      { "label": "回到顶部 ↑", "href": "#hero" }
+    ]
+  }
+}

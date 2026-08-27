@@ -1,50 +1,88 @@
 # 安道智能 · 公司官网
 
-这是 [andaoai](https://github.com/andaoai) 组织下 **安道智能** 的官方网站，托管在 GitHub Pages。
+[andaoai](https://github.com/andaoai) 组织下 **安道智能** 的官方网站，托管在 GitHub Pages。
 
 > 指导数据化，迈向智能化。
 > 扎根茂名产业的技术落地者。
 
-## 本地预览
+## 技术架构
 
-```bash
-# 任选其一
-python3 -m http.server 8080
-# 或
-npx serve .
+**Vue 3 + Vite** 单页应用，**内容与代码分离**：
+
+- **数据驱动**：所有内容（8 个 section + 网站配置）放在 `src/data/` 的 JSON 文件
+- **同一份数据，两个视图**：
+  - 普通浏览模式（滚动官网）
+  - 演示模式（PPT 16:9 固定画布，URL 加 `#present` 进入）
+- **加内容 = 改 JSON**：未来要新增/修改章节，只编辑 `src/data/slides.json`
+
+```
+src/
+├── data/
+│   ├── site.json          # 网站配置：title、logo、nav、footer
+│   └── slides.json        # 8 张幻灯片内容
+├── components/
+│   ├── layout/            # SiteHeader, SiteFooter, SectionHead
+│   ├── sections/          # 6 种 section 布局组件
+│   ├── cards/             # 5 种卡片组件
+│   ├── icons/             # 15 个 Lucide 图标
+│   └── presenter/         # PPT 模式 UI
+├── composables/
+│   └── usePresenter.js    # PPT 状态 + 键盘 + URL + resize 监听
+├── styles/main.css        # 全局样式（深色科技感）
+├── App.vue                # 根组件
+└── main.js                # 入口
 ```
 
-浏览器打开 http://localhost:8080
+## 本地开发
+
+```bash
+npm install          # 装依赖
+npm run dev          # 起开发服务器（默认 http://localhost:5173）
+npm run build        # 构建到 dist/
+npm run preview      # 预览构建产物（默认 http://localhost:4173）
+```
 
 ## 部署到 GitHub Pages
 
-1. 推送代码到 `andaoai/andaoai.github.io` 仓库（公司组织下的 `<org>.github.io` 仓库）
-2. 仓库 Settings → Pages → Source 选 `main` 分支根目录
-3. 访问 `https://andaoai.github.io`
+1. 推送代码到 `andaoai/andaoai.github.io` 仓库
+2. CI 自动 build + deploy 到 `https://andaoai.github.io`
+3. （首次运行）仓库 Settings → Pages → Source 选 **"GitHub Actions"**，`enablement: true` 会自动启用
 
-## 文件结构
+## 添加新内容
 
+只需编辑 `src/data/slides.json`，在 `slides` 数组里追加新的 slide 对象：
+
+```json
+{
+  "id": "new-section",
+  "layout": "grid-3",
+  "alt": false,
+  "kicker": "09 / 新章节",
+  "title": "标题",
+  "titleAccent": "高亮部分",
+  "desc": "可选描述",
+  "cards": [
+    { "icon": "target", "title": "...", "desc": "..." }
+  ]
+}
 ```
-company/
-├── index.html      # 单页全部内容
-├── style.css       # 样式
-└── README.md       # 本文件
-```
 
-## 内容结构
+7 种可用的 `layout`（无需新组件）：
+- `hero` — 品牌首页
+- `grid-3` — 3 列卡片
+- `grid-3-person` — 3 列人物卡（带头像/标签）
+- `grid-4` — 4 列卡片
+- `grid-3-contact` — 3 列联系方式
+- `tech-list` — 单列技术项
+- `section-head-only` — 仅标题（用作章节分隔页）
 
-- **Hero** — 品牌标语 + 数据概览
-- **关于** — 公司定位与价值观
-- **团队** — 三位核心成员（CEO / CTO / 技术经理）
-- **技术方向** — 自研核心（工业视觉 / Agent / 数据标注）+ 供应商集成（CRM / MES / 云）
-- **行业** — 茂名产业对位
-- **联系** — 商务/技术/项目联系方式
+15 个可用 `icon`：`target` / `cog` / `sprout` / `scan-eye` / `bot` / `tag` / `briefcase` / `factory` / `cloud` / `cpu` / `plug` / `mail` / `github` / `x` / `present`
 
-> 演示模式共 8 张幻灯片（技术方向拆为 03 总览 / 03A 自研 / 03B 集成 三张，避免单页溢出）。
+> 字段值是**纯文本**（不解析 HTML），保证内容可控。如需富文本，可扩展字段 + `v-html` 渲染。
 
 ## 演示模式（PPT 播放 · 隐藏入口）
 
-页面默认是普通浏览模式，演示功能不展示任何入口。**仅当 URL 带上入参时才自动进入**：
+普通浏览模式是默认，**仅当 URL 带上入参时自动进入演示模式**：
 
 ```
 https://andaoai.github.io/#present        ← 直接进入
@@ -63,16 +101,44 @@ https://andaoai.github.io/?present=1      ← 同效
 | `F` | 切换浏览器全屏 |
 | `Esc` / 右上角 ✕ | 退出（URL 入参自动清理） |
 
-适合外出给客户讲解：把 `#present` 链接收藏到书签/微信收藏夹，需要时一键直达。
-
 > **架构**：每张幻灯片是固定 1600×900（16:9）画布，按视口大小整体缩放居中。
 > 视口与 16:9 不一致时显示黑边（letterbox / pillarbox）。内容永远在固定坐标系内布局，
 > 无论投影仪是 4K、1080p 还是笔记本小窗，幻灯片排版永远一致，永不溢出。
 
+## 8 张幻灯片
+
+1. **Hero** — 品牌标语 + 数据概览
+2. **关于** — 公司定位
+3. **团队** — 三位核心
+4. **技术方向（总览）** — 自研 + 集成两条腿
+5. **自研核心** — 工业视觉 / Agent 框架 / 数据标注
+6. **供应商集成** — CRM / MES / 云基础设施
+7. **行业对位** — 茂名产业
+8. **联系** — 商务方式
+
 ## 技术栈
 
-- 纯 HTML / CSS / JavaScript，零构建
-- 字体：Google Fonts (Inter / JetBrains Mono)
-- 响应式：桌面 / 平板 / 手机三档断点
-- 风格对标 DeepSeek，深色科技感
-- 图标：[Lucide](https://lucide.dev) 风格内联 SVG（MIT License），单一 sprite 文件，零外链
+- Vue 3（Composition API + `<script setup>`）
+- Vite 5（开发服务器 + 构建）
+- 纯原生 CSS（无 Tailwind / 无 UI 框架）
+- 15 个 Lucide 图标（MIT 协议）
+- 静态部署：GitHub Pages + GitHub Actions
+
+零外部运行时依赖（除 Vue 3 自身），首屏 gzip 约 39KB。
+
+## 内容规范
+
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| `id` | string | 必填，唯一，小写连字符，会用作 `id="..."` 和 URL hash |
+| `layout` | string | 必填，从 7 个允许值中选 |
+| `alt` | boolean | 可选，是否用 `bg-alt` 背景交替 |
+| `kicker` / `title` / `titleAccent` / `desc` | string | 标题区域，titleAccent 自动套 `gradient-text` 样式 |
+| `cards[].icon` | string | 必填，从 15 个 icon 名中选 |
+| `cards[].title` / `desc` | string | 卡片标题和描述 |
+| `cards[].items[]` | string[] | （仅 industry）列表项 |
+| `members[]` | object | （仅 team）人物对象，含 avatar/role/name/bio/tags |
+| `items[]` | object | （仅 tech-list）技术项，含 icon/title/desc/value |
+| `actions[]` | object | （仅 hero）按钮，含 label/href/variant |
+| `stats[]` | object | （仅 hero）数据卡，含 num/label |
+| `meta[]` | object | （仅 contact）底部元信息行 |

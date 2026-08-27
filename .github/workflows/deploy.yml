@@ -6,7 +6,7 @@ on:
     branches: [master]
   workflow_dispatch:
 
-# 权限：部署 GitHub Pages 必需
+# 全局权限（部署 GitHub Pages 必需）
 permissions:
   contents: read
   pages: write
@@ -18,32 +18,41 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    # 部署到 github-pages 环境（必须在 job 级别，不能在顶层）
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Setup Node.js 24
+      - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version: '20'
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
-          # 自动启用 Pages（解决首次运行的 404 错误）
+          # 首次运行自动启用 Pages（GitHub Actions 源）
           enablement: true
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (Vite)
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: ./dist
 
-      - name: Deploy to GitHub Pages
-        id: deployment
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    # 部署到 github-pages 环境（job 级别）
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
         uses: actions/deploy-pages@v4
