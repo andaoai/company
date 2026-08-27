@@ -31,6 +31,9 @@
         <a href="#contact">联系</a>
       </nav>
       <a href="#contact" class="nav-cta">合作咨询 →</a>
+      <button class="nav-toggle" aria-label="切换菜单" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
@@ -107,7 +110,7 @@
         <div class="team-card">
           <div class="avatar">王</div>
           <div class="team-role">CEO</div>
-          <h3 class="team-name">王蔼锋</h3>
+          <h3 class="team-name">王</h3>
           <p class="team-bio">统筹公司战略与商业落地，主导客户对接、项目推进与生态合作，确保技术能力高效转化为业务价值。</p>
           <div class="team-tags">
             <span>战略规划</span>
@@ -120,7 +123,7 @@
           <div class="featured-badge">技术核心</div>
           <div class="avatar">陈</div>
           <div class="team-role">CTO</div>
-          <h3 class="team-name">陈柳安</h3>
+          <h3 class="team-name">陈</h3>
           <p class="team-bio">主导自研技术体系建设，涵盖视觉算法、智能体框架、数据平台，是公司"护城河"的总架构师。</p>
           <div class="team-tags">
             <span>视觉算法</span>
@@ -132,7 +135,7 @@
         <div class="team-card">
           <div class="avatar">陈</div>
           <div class="team-role">技术经理</div>
-          <h3 class="team-name">陈科秀</h3>
+          <h3 class="team-name">陈</h3>
           <p class="team-bio">负责项目交付与团队管理，把控技术落地质量，串联研发与一线客户需求，确保每个项目按时按质上线。</p>
           <div class="team-tags">
             <span>项目交付</span>
@@ -280,19 +283,19 @@
       <div class="contact-grid">
         <div class="contact-card">
           <div class="contact-label">商务合作</div>
-          <div class="contact-value">王蔼锋 · CEO</div>
+          <div class="contact-value">王 · CEO</div>
           <a href="mailto:business@andaoai.com" class="contact-link">business@andaoai.com</a>
         </div>
 
         <div class="contact-card">
           <div class="contact-label">技术咨询</div>
-          <div class="contact-value">陈柳安 · CTO</div>
+          <div class="contact-value">陈 · CTO</div>
           <a href="mailto:tech@andaoai.com" class="contact-link">tech@andaoai.com</a>
         </div>
 
         <div class="contact-card">
           <div class="contact-label">项目交付</div>
-          <div class="contact-value">陈科秀 · 技术经理</div>
+          <div class="contact-value">陈 · 技术经理</div>
           <a href="mailto:project@andaoai.com" class="contact-link">project@andaoai.com</a>
         </div>
       </div>
@@ -347,6 +350,38 @@
         l.classList.toggle('active', l.getAttribute('href') === '#' + cur);
       });
     });
+
+    // 移动端汉堡菜单
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-links');
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        const open = navMenu.classList.toggle('open');
+        navToggle.classList.toggle('active', open);
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+      // 点击菜单项后自动关闭
+      navMenu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          if (navMenu.classList.contains('open')) {
+            navMenu.classList.remove('open');
+            navToggle.classList.remove('active');
+            navToggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+          }
+        });
+      });
+      // 视口变大（横转竖/展开）时自动关闭菜单
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 900 && navMenu.classList.contains('open')) {
+          navMenu.classList.remove('open');
+          navToggle.classList.remove('active');
+          navToggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+      });
+    }
   </script>
 </body>
 </html>

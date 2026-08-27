@@ -666,21 +666,148 @@ ul { list-style: none; }
 
 .footer-right a:hover { color: var(--primary); }
 
-/* ========== Responsive ========== */
-@media (max-width: 900px) {
-  .nav-links { display: none; }
-  .about-grid,
-  .team-grid,
-  .contact-grid { grid-template-columns: 1fr; }
-  .tech-cols { grid-template-columns: 1fr; }
-  .industry-grid { grid-template-columns: repeat(2, 1fr); }
-  .hero-stats { gap: 32px; }
-  .section { padding: 80px 0; }
+/* ========== 汉堡按钮（默认桌面隐藏） ========== */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-@media (max-width: 600px) {
-  .industry-grid { grid-template-columns: 1fr; }
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.active span:nth-child(2) { opacity: 0; }
+.nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ========== Responsive ========== */
+/* 平板 */
+@media (max-width: 900px) {
+  .nav-inner { padding: 0 20px; }
   .nav-cta { display: none; }
-  .hero { padding: 120px 0 60px; }
-  .hero-stats { flex-direction: column; gap: 20px; }
+  .nav-toggle { display: flex; }
+
+  /* 移动菜单：抽屉式下拉 */
+  .nav-links {
+    position: fixed;
+    top: 65px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 12px 24px 24px;
+    background: rgba(10, 10, 20, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transform: translateY(-12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.25s, opacity 0.25s;
+  }
+  .nav-links.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .nav-links a {
+    padding: 16px 0;
+    font-size: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-links a:last-child { border-bottom: none; }
+  .nav-links a.active::after { display: none; }
+  .nav-links a.active { color: var(--primary); }
+
+  /* 栅格单列 */
+  .about-grid,
+  .team-grid,
+  .contact-grid,
+  .tech-cols { grid-template-columns: 1fr; }
+  .industry-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* 紧凑内边距 */
+  .section { padding: 80px 0; }
+  .container { padding: 0 20px; }
+  .about-card,
+  .team-card,
+  .tech-col,
+  .contact-card { padding: 24px; }
+  .tech-col-head { padding-bottom: 20px; margin-bottom: 20px; }
+  .tech-item { padding: 16px 0; }
+
+  .hero-stats { gap: 32px; }
+}
+
+/* 手机 */
+@media (max-width: 600px) {
+  .nav-inner { padding: 0 16px; }
+  .logo-text { display: none; } /* 空间紧，只留字母 logo */
+
+  .industry-grid { grid-template-columns: 1fr; }
+
+  .hero { padding: 110px 0 50px; }
+  .hero-tag { font-size: 11px; letter-spacing: 1.5px; margin-bottom: 24px; }
+  .hero-sub { font-size: 15px; margin-bottom: 32px; }
+  .hero-actions { margin-bottom: 56px; }
+  .btn { padding: 13px 22px; font-size: 14px; }
+  .hero-stats {
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 32px;
+  }
+  .stat-num { font-size: 30px; }
+
+  .section { padding: 64px 0; }
+  .section-head { margin-bottom: 48px; }
+  .section-desc { font-size: 15px; }
+
+  /* 卡片小屏更紧凑 */
+  .about-card,
+  .team-card,
+  .tech-col,
+  .contact-card { padding: 22px; border-radius: 12px; }
+  .team-card { padding: 28px 22px; }
+  .avatar { width: 64px; height: 64px; font-size: 24px; }
+  .team-name { font-size: 20px; }
+  .col-num { width: 40px; height: 40px; font-size: 16px; }
+  .tech-col-head { gap: 12px; }
+
+  /* 联系方式改为竖排 */
+  .contact-meta {
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* footer 竖排 */
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+}
+
+/* 超小屏（< 380px） */
+@media (max-width: 380px) {
+  .container { padding: 0 14px; }
+  .hero-actions { flex-direction: column; width: 100%; }
+  .btn { width: 100%; }
+  .hero-stats { gap: 16px; }
 }
