@@ -5,6 +5,9 @@
 > 指导数据化，迈向智能化。
 > 扎根茂名产业的技术服务商。
 
+🌐 **在线访问**：<https://andaoai.github.io/company/>
+🎬 **演示模式（隐藏 PPT 入口）**：<https://andaoai.github.io/company/?present>
+
 ## 技术架构
 
 **Vue 3 + Vite** 单页应用，**内容与代码分离**：
@@ -22,10 +25,10 @@ src/
 │   └── slides.json        # 8 张幻灯片内容
 ├── components/
 │   ├── layout/            # SiteHeader, SiteFooter, SectionHead
-│   ├── sections/          # 6 种 section 布局组件
-│   ├── cards/             # 5 种卡片组件
-│   ├── icons/             # 15 个 Lucide 图标
-│   └── presenter/         # PPT 模式 UI
+│   ├── sections/          # 8 个 section 组件
+│   ├── cards/             # 6 个卡片组件
+│   ├── icons/             # 15 个自研 SVG 图标（参考 Lucide）
+│   └── presenter/         # 演示模式 UI（2 个组件）
 ├── composables/
 │   └── usePresenter.js    # PPT 状态 + 键盘 + URL + resize 监听
 ├── styles/main.css        # 全局样式（深色科技感）
@@ -44,9 +47,9 @@ npm run preview      # 预览构建产物（默认 http://localhost:4173）
 
 ## 部署到 GitHub Pages
 
-1. 推送代码到 `andaoai/andaoai.github.io` 仓库
-2. CI 自动 build + deploy 到 `https://andaoai.github.io`
-3. （首次运行）仓库 Settings → Pages → Source 选 **"GitHub Actions"**，`enablement: true` 会自动启用
+1. 推送代码到 `andaoai/andaoai.github.io` 仓库（项目位于 `company/` 子目录）
+2. CI 自动 build + deploy 到 **<https://andaoai.github.io/company/>**
+3. （首次运行）仓库 Settings → Pages → Source 选 **"GitHub Actions"**，workflow 里的 `enablement: true` 会自动启用
 
 ## 添加新内容
 
@@ -85,9 +88,9 @@ npm run preview      # 预览构建产物（默认 http://localhost:4173）
 普通浏览模式是默认，**仅当 URL 带上入参时自动进入演示模式**：
 
 ```
-https://andaoai.github.io/#present        ← 直接进入
-https://andaoai.github.io/?present        ← 同效
-https://andaoai.github.io/?present=1      ← 同效
+https://andaoai.github.io/company/#present        ← 直接进入
+https://andaoai.github.io/company/?present        ← 同效
+https://andaoai.github.io/company/?present=1      ← 同效
 ```
 
 进入后每节变成一张幻灯片，自动请求浏览器全屏（被拒则降级为普通全屏模式）。
@@ -121,7 +124,7 @@ https://andaoai.github.io/?present=1      ← 同效
 - Vue 3（Composition API + `<script setup>`）
 - Vite 5（开发服务器 + 构建）
 - 纯原生 CSS（无 Tailwind / 无 UI 框架）
-- 15 个 Lucide 图标（MIT 协议）
+- 15 个自研 SVG 图标（参考 Lucide 风格）
 - 静态部署：GitHub Pages + GitHub Actions
 
 零外部运行时依赖（除 Vue 3 自身），首屏 gzip 约 39KB。
