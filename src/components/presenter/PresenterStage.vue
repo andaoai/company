@@ -24,6 +24,7 @@ import TechBaseSection from '../sections/TechBaseSection.vue'
 import IndustrySection from '../sections/IndustrySection.vue'
 import ContactSection from '../sections/ContactSection.vue'
 import SectionHeadOnly from '../sections/SectionHeadOnly.vue'
+import CasesSection from '../sections/CasesSection.vue'
 
 const layoutMap = {
   hero: HeroSection,
@@ -34,6 +35,7 @@ const layoutMap = {
   'grid-2': TechBaseSection,
   'tech-list': TechSection,
   'section-head-only': SectionHeadOnly,
+  cases: CasesSection,
 }
 
 const props = defineProps({

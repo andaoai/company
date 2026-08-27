@@ -41,6 +41,7 @@ import TechBaseSection from './components/sections/TechBaseSection.vue'
 import IndustrySection from './components/sections/IndustrySection.vue'
 import ContactSection from './components/sections/ContactSection.vue'
 import SectionHeadOnly from './components/sections/SectionHeadOnly.vue'
+import CasesSection from './components/sections/CasesSection.vue'
 
 import SiteHeader from './components/layout/SiteHeader.vue'
 import SiteFooter from './components/layout/SiteFooter.vue'
@@ -59,6 +60,7 @@ const layoutMap = {
   'grid-2': TechBaseSection,
   'tech-list': TechSection,
   'section-head-only': SectionHeadOnly,
+  cases: CasesSection,
 }
 
 // 演示模式（仅在演示模式下显示 PPT，body.present-mode 由 composable 内部管理）

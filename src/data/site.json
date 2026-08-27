@@ -9,6 +9,7 @@
     { "label": "关于", "href": "#about" },
     { "label": "团队", "href": "#team" },
     { "label": "技术", "href": "#tech" },
+    { "label": "案例", "href": "#cases" },
     { "label": "行业", "href": "#industry" },
     { "label": "联系", "href": "#contact" }
   ],

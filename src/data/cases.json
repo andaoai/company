@@ -1,0 +1,223 @@
+{
+  "stats": [
+    { "num": "12", "label": "服务客户" },
+    { "num": "22", "label": "落地项目" },
+    { "num": "35", "suffix": "月", "label": "累计服务" },
+    { "num": "19", "suffix": "月", "label": "最长维护" },
+    { "num": "2", "suffix": "年", "label": "真实运行" }
+  ],
+  "hero": {
+    "id": "case-yema-violation",
+    "title": "智慧交通车辆违停自动抓拍系统",
+    "client": "某本地智慧交通客户",
+    "clientType": "民企",
+    "industry": "智慧交通",
+    "route": "工厂行为合规",
+    "problem": "道路违停靠人工巡查，覆盖率低、取证不及时，违章现象反复。",
+    "solution": "端侧 AI 实时识别违停车辆，自动抓拍 + 平台告警推送，全流程无人值守。",
+    "metrics": [
+      { "value": "2 年", "label": "已稳定运行", "stage": "运维" },
+      { "value": "16 路", "label": "视频并发处理", "stage": "算法" },
+      { "value": "客户满意", "label": "长期反馈", "stage": "运维" }
+    ],
+    "highlight": "已真实部署运行 2 年 · 非 demo",
+    "tags": ["智慧交通", "端侧部署", "实时告警"]
+  },
+  "routes": [
+    {
+      "id": "vision-quality",
+      "label": "看产品",
+      "name": "工业视觉质量检测",
+      "icon": "scan-eye",
+      "color": "blue",
+      "count": 6,
+      "desc": "替代人工目检，覆盖汽车、医药、建材、消费品等行业的表面缺陷与装配质量。",
+      "cases": [
+        {
+          "id": "sfiss-wheel",
+          "title": "汽车轮毂表面缺陷检测",
+          "client": "某汽车零部件厂",
+          "clientType": "民企",
+          "industry": "汽车零部件",
+          "desc": "汽车轮毂铸造后表面划伤 / 凹陷自动检出。",
+          "period": "长期维护（19 个月+）"
+        },
+        {
+          "id": "lyo-bottle",
+          "title": "冻干瓶（西林瓶）缺陷检测",
+          "client": "某医药包装企业",
+          "clientType": "民企",
+          "industry": "医药包装",
+          "desc": "药用西林瓶冻干后裂纹 / 脏污自动识别，符合 GMP。",
+          "period": "长期维护（19 个月+）"
+        },
+        {
+          "id": "weld-defect",
+          "title": "钢结构焊缝缺陷检测",
+          "client": "某钢结构企业",
+          "clientType": "民企",
+          "industry": "建筑 / 钢结构",
+          "desc": "钢结构焊缝虚焊 / 夹渣 / 气孔自动识别。",
+          "period": "已交付"
+        },
+        {
+          "id": "surface-general",
+          "title": "通用工业表面瑕疵检测",
+          "client": "某工业制造企业",
+          "clientType": "民企",
+          "industry": "工业制造",
+          "desc": "工业产品表面瑕疵通用检测方案，可复用。",
+          "period": "已交付"
+        },
+        {
+          "id": "vacuum-parts",
+          "title": "家电配件缺漏检测",
+          "client": "某家电制造企业",
+          "clientType": "民企",
+          "industry": "家电制造",
+          "desc": "流水线检测工人是否漏放配件 + 自动上报 MES。",
+          "period": "已交付"
+        },
+        {
+          "id": "ring-oil",
+          "title": "胶圈 + 机油尺自动检测",
+          "client": "某机械装备企业",
+          "clientType": "民企",
+          "industry": "机械装备",
+          "desc": "5 个产品系列（EC/EN 编号）的胶圈是否装好 + 机油尺长度是否达标。",
+          "period": "已交付"
+        }
+      ]
+    },
+    {
+      "id": "site-safety",
+      "label": "看人",
+      "name": "工地安全合规",
+      "icon": "target",
+      "color": "amber",
+      "count": 3,
+      "desc": "工地端侧实时检测工人穿戴与作业行为，自动记录证据。",
+      "cases": [
+        {
+          "id": "site-edge",
+          "title": "工地安全合规端侧检测",
+          "client": "某建筑施工企业",
+          "clientType": "民企",
+          "industry": "建筑工地",
+          "desc": "现场摄像头自动识别工人有没有按规定戴安全帽 / 穿反光衣 / 抽烟 + 自动记录证据。",
+          "period": "端侧长期运行",
+          "featured": true
+        },
+        {
+          "id": "site-stream",
+          "title": "工地摄像头实时视频流分析",
+          "client": "某建筑施工企业",
+          "clientType": "民企",
+          "industry": "建筑工地",
+          "desc": "工地现场视频流实时分析，多路并发处理。",
+          "period": "已交付"
+        },
+        {
+          "id": "site-edge-model",
+          "title": "工地安全合规检测模型训练",
+          "client": "内部能力沉淀",
+          "clientType": "内部",
+          "industry": "建筑工地",
+          "desc": "配套端侧应用的 AI 模型训练，跨项目复用。",
+          "period": "持续迭代"
+        }
+      ]
+    },
+    {
+      "id": "factory-behavior",
+      "label": "看行为",
+      "name": "工厂行为合规",
+      "icon": "factory",
+      "color": "violet",
+      "count": 2,
+      "desc": "工厂违规行为综合检测，多路视频并发 + 实时告警。",
+      "cases": [
+        {
+          "id": "yema-violation",
+          "title": "工厂 5 大违规行为综合检测",
+          "client": "某电池工业企业",
+          "clientType": "民企",
+          "industry": "电池工业",
+          "desc": "人员聚集 / 区域入侵 / 玩手机 / 脱岗 / 工服工帽 —— 5 大违规行为实时告警。",
+          "period": "企业级平台运行",
+          "featured": true
+        },
+        {
+          "id": "violation-models",
+          "title": "5 大违规行为检测模型训练",
+          "client": "内部能力沉淀",
+          "clientType": "内部",
+          "industry": "电池工业",
+          "desc": "配套上述系统的 AI 模型训练，5 大违规检测可独立部署。",
+          "period": "持续迭代"
+        }
+      ]
+    },
+    {
+      "id": "construction",
+      "label": "看工程",
+      "name": "建筑监理辅助",
+      "icon": "cog",
+      "color": "cyan",
+      "count": 1,
+      "desc": "建筑工地钢筋绑扎密度检测，替代监理的尝试性质量验收工作。",
+      "cases": [
+        {
+          "id": "rebar-density",
+          "title": "钢筋绑扎密度检测",
+          "client": "某工程咨询企业",
+          "clientType": "民企",
+          "industry": "建筑 / 监理",
+          "desc": "建筑工地钢筋绑得密不密——替代监理的尝试性质量验收工作。",
+          "period": "已交付",
+          "featured": true
+        }
+      ]
+    },
+    {
+      "id": "data-collection",
+      "label": "看数据",
+      "name": "工业数据采集与上报",
+      "icon": "cloud",
+      "color": "emerald",
+      "count": 3,
+      "desc": "OCR 读数 + 拍照 AI 识别，让数据自动入 MES，替代人工抄表。",
+      "cases": [
+        {
+          "id": "ocr-test",
+          "title": "测试数据 OCR 自动采集",
+          "client": "某电子测试设备企业",
+          "clientType": "民企",
+          "industry": "工业数字化",
+          "desc": "OCR 识别测试数据数字 → 自动上报 MES，替代人工抄表。",
+          "period": "已交付",
+          "featured": true
+        },
+        {
+          "id": "image-sync",
+          "title": "拍照 + AI 识别工件身份",
+          "client": "某机械装备企业",
+          "clientType": "民企",
+          "industry": "工业制造",
+          "desc": "流水线拍照 6 张 + AI 识别工件身份 + 上报 MES（防错位 + 全程溯源）。",
+          "period": "已交付",
+          "featured": true
+        },
+        {
+          "id": "viz-platform",
+          "title": "通用数据可视化平台搭建",
+          "client": "某工业制造企业",
+          "clientType": "民企",
+          "industry": "工业数字化",
+          "desc": "给客户搭建通用数据可视化平台，对接已有数据源。",
+          "period": "已交付"
+        }
+      ]
+    }
+  ]
+}
