@@ -811,3 +811,19 @@ ul { list-style: none; }
   .btn { width: 100%; }
   .hero-stats { gap: 16px; }
 }
+
+/* ========== 隐藏浏览器滚动条（保留滚动能力） ========== */
+html {
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;       /* IE / 旧 Edge */
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;                  /* Chrome / Safari / 新 Edge */
+}
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
