@@ -17,14 +17,13 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
-# 默认环境（Pages 部署专用）
-environment:
-  name: github-pages
-  url: ${{ steps.deployment.outputs.page_url }}
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # 部署到 github-pages 环境（必须在 job 级别，不能在顶层）
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
