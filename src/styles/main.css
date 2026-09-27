@@ -570,6 +570,91 @@ ul { list-style: none; }
   display: inline-block;
 }
 
+/* ========== Service（服务方式） ========== */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* 第 4、5 张卡居中：横跨起始列，让两个空位对称分布 */
+.service-grid > *:nth-child(4) { grid-column: 1; }
+.service-grid > *:nth-child(5) { grid-column: 2; }
+
+.service-card {
+  padding: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.service-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(79, 143, 255, 0.1);
+}
+
+.service-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.service-card-head .icon { color: var(--primary); }
+
+.service-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--cyan);
+  padding: 4px 10px;
+  background: rgba(0, 212, 255, 0.08);
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.service-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.service-card p {
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 14px;
+  flex: 1;
+}
+
+.service-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--primary);
+  padding: 6px 10px;
+  background: rgba(79, 143, 255, 0.06);
+  border-radius: 6px;
+}
+
+.service-note {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 14px;
+  color: var(--text-dim);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.service-note strong { color: var(--text); font-weight: 600; }
+
 /* ========== Tech Base（开源项目/技术基底） ========== */
 .tech-base-grid {
   display: grid;
@@ -905,6 +990,9 @@ ul { list-style: none; }
   .tech-cols { grid-template-columns: 1fr; }
   .industry-grid { grid-template-columns: repeat(2, 1fr); }
   .tech-base-grid { grid-template-columns: 1fr; }
+  .service-grid { grid-template-columns: repeat(2, 1fr); }
+  .service-grid > *:nth-child(4),
+  .service-grid > *:nth-child(5) { grid-column: auto; }
 
   /* 紧凑内边距 */
   .section { padding: 80px 0; }
@@ -925,6 +1013,8 @@ ul { list-style: none; }
   .logo-text { display: none; } /* 空间紧，只留字母 logo */
 
   .industry-grid { grid-template-columns: 1fr; }
+
+  .service-grid { grid-template-columns: 1fr; }
 
   .hero { padding: 110px 0 50px; }
   .hero-tag { font-size: 11px; letter-spacing: 1.5px; margin-bottom: 24px; }
@@ -1114,6 +1204,26 @@ body.present-mode .present-stage { display: flex; }
 .slide-section .section-head { margin-bottom: 36px; text-align: center; }
 .slide-section .section-title { font-size: clamp(40px, 4.5vw, 60px); }
 .slide-section .section-desc { font-size: 17px; }
+
+/* 服务方式：演示模式下 3 列 3+2，经固定坐标核算总高约 700px，900px 内不溢出 */
+.slide-section .service-grid {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 1400px;
+}
+.slide-section .service-card { padding: 18px 20px; }
+.slide-section .service-card:hover { transform: none; box-shadow: none; }
+.slide-section .service-card-head { margin-bottom: 12px; }
+.slide-section .service-card-head .icon { width: 26px; height: 26px; }
+.slide-section .service-tag { display: none; }
+.slide-section .service-title { font-size: 16px; line-height: 1.4; margin-bottom: 8px; }
+.slide-section .service-card p { font-size: 13px; line-height: 1.6; margin-bottom: 10px; }
+.slide-section .service-value {
+  font-size: 11px;
+  line-height: 1.5;
+  padding: 5px 8px;
+}
+.slide-section .service-note { margin-top: 22px; font-size: 13px; }
 
 /* === 隐藏原网页内容（演示模式下不显示） === */
 body.present-mode {

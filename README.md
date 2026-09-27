@@ -12,7 +12,7 @@
 
 **Vue 3 + Vite** 单页应用，**内容与代码分离**：
 
-- **数据驱动**：所有内容（8 个 section + 网站配置）放在 `src/data/` 的 JSON 文件
+- **数据驱动**：所有内容（11 个 section + 网站配置）放在 `src/data/` 的 JSON 文件
 - **同一份数据，两个视图**：
   - 普通浏览模式（滚动官网）
   - 演示模式（PPT 16:9 固定画布，URL 加 `#present` 进入）
@@ -22,13 +22,13 @@
 src/
 ├── data/
 │   ├── site.json          # 网站配置：title、logo、nav、footer
-│   ├── slides.json        # 10 个 section 入口与标题
+│   ├── slides.json        # 11 个 section 入口与标题
 │   └── cases.json         # 落地案例数据（5 业务路线 × 16 case）
 ├── components/
 │   ├── layout/            # SiteHeader, SiteFooter, SectionHead
-│   ├── sections/          # 9 个 section 组件
-│   ├── cards/             # 8 个卡片组件（含 CaseCard / CaseFeatured）
-│   ├── icons/             # 15 个自研 SVG 图标（参考 Lucide）
+│   ├── sections/          # 10 个 section 组件
+│   ├── cards/             # 9 个卡片组件（含 CaseCard / CaseFeatured / ServiceCard）
+│   ├── icons/             # 20 个自研 SVG 图标（参考 Lucide）
 │   └── presenter/         # 演示模式 UI（2 个组件）
 ├── composables/
 │   └── usePresenter.js    # PPT 状态 + 键盘 + URL + resize 监听
@@ -71,7 +71,7 @@ npm run preview      # 预览构建产物（默认 http://localhost:4173）
 }
 ```
 
-8 种可用的 `layout`（无需新组件）：
+10 种可用的 `layout`（无需新组件）：
 - `hero` — 品牌首页
 - `grid-3` — 3 列卡片
 - `grid-3-person` — 3 列人物卡（带头像/标签）
@@ -79,10 +79,11 @@ npm run preview      # 预览构建产物（默认 http://localhost:4173）
 - `grid-3-contact` — 3 列联系方式
 - `grid-2` — 2 列卡片（含开源项目）
 - `tech-list` — 单列技术项
+- `service-grid` — 3 列服务方式卡（3+2 排列，自动适配演示模式）
 - `section-head-only` — 仅标题（用作章节分隔页）
 - `cases` — 落地案例（5 业务路线分组，数据来自 `src/data/cases.json`）
 
-15 个可用 `icon`：`target` / `cog` / `sprout` / `scan-eye` / `bot` / `tag` / `briefcase` / `factory` / `cloud` / `cpu` / `plug` / `mail` / `github` / `x` / `present`
+20 个可用 `icon`：`target` / `cog` / `sprout` / `scan-eye` / `bot` / `tag` / `briefcase` / `factory` / `cloud` / `cpu` / `plug` / `mail` / `github` / `x` / `present` / `handshake` / `map-pin` / `trending-up` / `shield-check` / `lightbulb`
 
 > 字段值是**纯文本**（不解析 HTML），保证内容可控。如需富文本，可扩展字段 + `v-html` 渲染。
 
@@ -128,7 +129,7 @@ https://andaoai.github.io/company/?present=1      ← 同效
 | `→` / `Space` / `PageDown` | 下一张 |
 | `←` / `PageUp` | 上一张 |
 | `Home` / `End` | 第一/最后一张 |
-| `1` ~ `8` | 数字键直接跳到指定页 |
+| `1` ~ `9` | 数字键直接跳到指定页 |
 | `F` | 切换浏览器全屏 |
 | `Esc` / 右上角 ✕ | 退出（URL 入参自动清理） |
 
@@ -136,7 +137,7 @@ https://andaoai.github.io/company/?present=1      ← 同效
 > 视口与 16:9 不一致时显示黑边（letterbox / pillarbox）。内容永远在固定坐标系内布局，
 > 无论投影仪是 4K、1080p 还是笔记本小窗，幻灯片排版永远一致，永不溢出。
 
-## 10 张幻灯片
+## 11 张幻灯片
 
 1. **Hero** — 品牌标语 + 数据概览（12 客户 / 22 项目 / 2 年运行）
 2. **关于** — 公司定位 + 服务对象（茂名国企与民企）
@@ -145,16 +146,17 @@ https://andaoai.github.io/company/?present=1      ← 同效
 5. **自研核心** — 工业视觉 / Agent 框架 / 数据标注
 6. **供应商集成** — CRM / MES / 云基础设施
 7. **技术基底** — 已开源项目（go-infer、yolo-label-vs）
-8. **落地案例** — 5 业务路线 × 16 个真实项目（精选 + 分组）
-9. **行业对位** — 茂名产业
-10. **联系** — 商务方式
+8. **服务方式** — 5 种合作模式（总包 / 驻场 / 按效果 / 运维 / 咨询）
+9. **落地案例** — 5 业务路线 × 16 个真实项目（精选 + 分组）
+10. **行业对位** — 茂名产业
+11. **联系** — 商务方式
 
 ## 技术栈
 
 - Vue 3（Composition API + `<script setup>`）
 - Vite 5（开发服务器 + 构建）
 - 纯原生 CSS（无 Tailwind / 无 UI 框架）
-- 15 个自研 SVG 图标（参考 Lucide 风格）
+- 20 个自研 SVG 图标（参考 Lucide 风格）
 - 静态部署：GitHub Pages + GitHub Actions
 
 零外部运行时依赖（除 Vue 3 自身），首屏 gzip 约 39KB。
@@ -166,14 +168,16 @@ https://andaoai.github.io/company/?present=1      ← 同效
 | 字段 | 类型 | 说明 |
 |---|---|---|
 | `id` | string | 必填，唯一，小写连字符，会用作 `id="..."` 和 URL hash |
-| `layout` | string | 必填，从 8 个允许值中选（含 `cases`） |
+| `layout` | string | 必填，从 10 个允许值中选（含 `cases`） |
 | `alt` | boolean | 可选，是否用 `bg-alt` 背景交替 |
 | `kicker` / `title` / `titleAccent` / `desc` | string | 标题区域，titleAccent 自动套 `gradient-text` 样式 |
-| `cards[].icon` | string | 必填，从 15 个 icon 名中选 |
+| `cards[].icon` | string | 必填，从 20 个 icon 名中选 |
 | `cards[].title` / `desc` | string | 卡片标题和描述 |
 | `cards[].items[]` | string[] | （仅 industry）列表项 |
 | `members[]` | object | （仅 team）人物对象，含 avatar/role/name/bio/tags |
 | `items[]` | object | （仅 tech-list）技术项，含 icon/title/desc/value |
+| `items[]` | object | （仅 service-grid）服务方式卡，含 icon/可选 tag/title/desc/value |
+| `note` | string | （仅 service-grid）章节底部补充说明，可信内部内容，支持 `<strong>` 富文本（`v-html` 渲染） |
 | `actions[]` | object | （仅 hero）按钮，含 label/href/variant |
 | `stats[]` | object | （仅 hero）数据卡，含 num/label |
 | `meta[]` | object | （仅 contact）底部元信息行 |

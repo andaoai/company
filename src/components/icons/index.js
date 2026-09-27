@@ -15,6 +15,11 @@ import IconMail from './IconMail.vue'
 import IconGithub from './IconGithub.vue'
 import IconPresent from './IconPresent.vue'
 import IconX from './IconX.vue'
+import IconHandshake from './IconHandshake.vue'
+import IconMapPin from './IconMapPin.vue'
+import IconTrendingUp from './IconTrendingUp.vue'
+import IconShieldCheck from './IconShieldCheck.vue'
+import IconLightbulb from './IconLightbulb.vue'
 
 export const ICONS = {
   target: IconTarget,
@@ -32,6 +37,11 @@ export const ICONS = {
   github: IconGithub,
   present: IconPresent,
   x: IconX,
+  handshake: IconHandshake,
+  'map-pin': IconMapPin,
+  'trending-up': IconTrendingUp,
+  'shield-check': IconShieldCheck,
+  lightbulb: IconLightbulb,
 }
 
 export function resolveIcon(name) {

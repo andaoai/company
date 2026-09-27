@@ -174,10 +174,57 @@
       ]
     },
     {
+      "id": "service",
+      "layout": "service-grid",
+      "alt": false,
+      "kicker": "04 / 服务方式",
+      "title": "怎么合作，",
+      "titleAccent": "灵活不设门槛",
+      "desc": "从需求明确的一口价交付，到先试点见效再付费，五种合作方式可选。每一种，核心代码都由我们亲自编写。",
+      "items": [
+        {
+          "icon": "handshake",
+          "tag": "Fixed Price",
+          "title": "项目总包 · 一口价",
+          "desc": "需求谈清楚、写成清单后报总价签合同，我们负责按期交付、客户验收，预算可控、责任清晰。",
+          "value": "按里程碑分期收款（预付 / 交付 / 质保金），需求变更走签证另计"
+        },
+        {
+          "icon": "map-pin",
+          "tag": "On-site",
+          "title": "本地驻场 · 人月服务",
+          "desc": "工程师进驻现场，按人月计费，需求可边做边改，沟通即时、随叫随到，发挥扎根茂名的本地优势。",
+          "value": "适合需求需要长期紧密协作、现场快速响应的项目"
+        },
+        {
+          "icon": "trending-up",
+          "tag": "Outcome-based",
+          "title": "按效果 · 用量付费",
+          "desc": "不按人、不按项目，按检测件数或实际节省的人力收费，利益与客户绑定。前期投入我们先扛。",
+          "value": "适合工业视觉检测等效果可量化、可对账的场景"
+        },
+        {
+          "icon": "shield-check",
+          "tag": "SLA",
+          "title": "年度运维 · SLA 保障",
+          "desc": "交付后按年维保，承诺响应时间（如故障限时到场），修 bug 与新需求在合同里分清。",
+          "value": "交付后我们不离开，把长期运行变成可持续的服务"
+        },
+        {
+          "icon": "lightbulb",
+          "tag": "Consulting",
+          "title": "技术咨询 · 顾问",
+          "desc": "客户自建团队时，提供数字化规划、AI 可行性评估、架构评审与方案把关，按次或按月计费。",
+          "value": "金额不大，却常是大项目合作的入口"
+        }
+      ],
+      "note": "<strong>不转包、不外包：</strong>下面这些项目的核心代码，均由我们团队成员亲手编写；驻场或总包，交付质量同样自己兜底。"
+    },
+    {
       "id": "cases",
       "layout": "cases",
-      "alt": false,
-      "kicker": "04 / 落地案例",
+      "alt": true,
+      "kicker": "05 / 落地案例",
       "title": "22 个真实项目，跑出来的",
       "titleAccent": "结果。",
       "desc": "12 个本地客户、35 个月累计服务、最长维护 19 个月。AI 在真实产线上跑，不在 PPT 里。"
@@ -185,8 +232,8 @@
     {
       "id": "industry",
       "layout": "grid-4",
-      "alt": true,
-      "kicker": "05 / 行业对接",
+      "alt": false,
+      "kicker": "06 / 行业对接",
       "title": "茂名产业 · ",
       "titleAccent": "真实应用场景",
       "desc": "技术方向不是凭空创造市场，而是直接对应当地已有的需求。",
@@ -232,8 +279,8 @@
     {
       "id": "contact",
       "layout": "grid-3-contact",
-      "alt": false,
-      "kicker": "06 / 联系我们",
+      "alt": true,
+      "kicker": "07 / 联系我们",
       "title": "聊聊您的",
       "titleAccent": "业务场景",
       "desc": "不论是想做 AI 视觉检测、智能体应用，还是数字化系统集成，欢迎直接联系。",
