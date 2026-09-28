@@ -20,6 +20,7 @@ import IconMapPin from './IconMapPin.vue'
 import IconTrendingUp from './IconTrendingUp.vue'
 import IconShieldCheck from './IconShieldCheck.vue'
 import IconLightbulb from './IconLightbulb.vue'
+import IconAward from './IconAward.vue'
 
 export const ICONS = {
   target: IconTarget,
@@ -42,6 +43,7 @@ export const ICONS = {
   'trending-up': IconTrendingUp,
   'shield-check': IconShieldCheck,
   lightbulb: IconLightbulb,
+  award: IconAward,
 }
 
 export function resolveIcon(name) {

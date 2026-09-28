@@ -2,7 +2,7 @@
   <div :class="['case-card', { 'case-card-featured': data.featured }]">
     <div class="case-card-head">
       <span class="case-industry">{{ data.industry }}</span>
-      <span :class="['case-type', `case-type-${data.clientType === '国企' ? 'soe' : 'private'}`]">
+      <span :class="['case-type', `case-type-${typeClass}`]">
         {{ data.clientType }}
       </span>
     </div>
@@ -16,7 +16,13 @@
 </template>
 
 <script setup>
-defineProps({ data: { type: Object, required: true } })
+import { computed } from 'vue'
+
+const props = defineProps({ data: { type: Object, required: true } })
+
+// 客户类型 → 样式类：国企 soe / 民企 private / 内部 internal
+const TYPE_CLASS = { 国企: 'soe', 民企: 'private', 内部: 'internal' }
+const typeClass = computed(() => TYPE_CLASS[props.data.clientType] ?? 'private')
 </script>
 
 <style scoped>
@@ -90,6 +96,12 @@ defineProps({ data: { type: Object, required: true } })
   color: #4f8fff;
   background: rgba(79, 143, 255, 0.08);
   border: 1px solid rgba(79, 143, 255, 0.25);
+}
+
+.case-type-internal {
+  color: #a78bfa;
+  background: rgba(167, 139, 250, 0.08);
+  border: 1px solid rgba(167, 139, 250, 0.25);
 }
 
 .case-title {

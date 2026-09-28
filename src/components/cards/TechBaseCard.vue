@@ -12,7 +12,7 @@
     <div class="tech-meta">
       <span v-if="data.tag" class="tech-tag">{{ data.tag }}</span>
       <span v-if="data.softCopyright" class="tech-softcopy">
-        <IconMail size="xs" />
+        <IconAward size="xs" />
         软著申请中
       </span>
     </div>
@@ -27,7 +27,7 @@
 import { computed } from 'vue'
 import { resolveIcon } from '../icons'
 import IconGithub from '../icons/IconGithub.vue'
-import IconMail from '../icons/IconMail.vue'
+import IconAward from '../icons/IconAward.vue'
 
 const props = defineProps({ data: { type: Object, required: true } })
 const iconComp = computed(() => resolveIcon(props.data.icon))

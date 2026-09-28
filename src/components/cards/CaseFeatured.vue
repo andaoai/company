@@ -1,6 +1,6 @@
 <template>
   <div class="case-featured">
-    <div class="case-featured-badge">⭐ 精选案例 · 已稳定运行 2 年</div>
+    <div class="case-featured-badge">⭐ {{ data.highlight || '精选案例' }}</div>
 
     <div class="case-featured-grid">
       <div class="case-featured-main">

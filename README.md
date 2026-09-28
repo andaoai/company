@@ -24,14 +24,17 @@ src/
 │   ├── site.json          # 网站配置：title、logo、nav、footer
 │   ├── slides.json        # 11 个 section 入口与标题
 │   └── cases.json         # 落地案例数据（5 业务路线 × 16 case）
+├── config/
+│   └── layouts.js         # 布局名 → section 组件的唯一映射（普通/演示共用）
 ├── components/
 │   ├── layout/            # SiteHeader, SiteFooter, SectionHead
 │   ├── sections/          # 10 个 section 组件
 │   ├── cards/             # 9 个卡片组件（含 CaseCard / CaseFeatured / ServiceCard）
-│   ├── icons/             # 20 个自研 SVG 图标（参考 Lucide）
+│   ├── icons/             # 21 个自研 SVG 图标（参考 Lucide）
 │   └── presenter/         # 演示模式 UI（2 个组件）
 ├── composables/
-│   └── usePresenter.js    # PPT 状态 + 键盘 + URL + resize 监听
+│   ├── usePresenter.js    # PPT 状态 + 键盘 + URL + resize 监听
+│   └── useScrollSpy.js    # 滚动时高亮当前导航
 ├── styles/main.css        # 全局样式（深色科技感）
 ├── App.vue                # 根组件
 └── main.js                # 入口
@@ -83,7 +86,7 @@ npm run preview      # 预览构建产物（默认 http://localhost:4173）
 - `section-head-only` — 仅标题（用作章节分隔页）
 - `cases` — 落地案例（5 业务路线分组，数据来自 `src/data/cases.json`）
 
-20 个可用 `icon`：`target` / `cog` / `sprout` / `scan-eye` / `bot` / `tag` / `briefcase` / `factory` / `cloud` / `cpu` / `plug` / `mail` / `github` / `x` / `present` / `handshake` / `map-pin` / `trending-up` / `shield-check` / `lightbulb`
+21 个可用 `icon`：`target` / `cog` / `sprout` / `scan-eye` / `bot` / `tag` / `briefcase` / `factory` / `cloud` / `cpu` / `plug` / `mail` / `github` / `x` / `present` / `handshake` / `map-pin` / `trending-up` / `shield-check` / `lightbulb` / `award`
 
 > 字段值是**纯文本**（不解析 HTML），保证内容可控。如需富文本，可扩展字段 + `v-html` 渲染。
 
@@ -156,7 +159,7 @@ https://andaoai.github.io/company/?present=1      ← 同效
 - Vue 3（Composition API + `<script setup>`）
 - Vite 5（开发服务器 + 构建）
 - 纯原生 CSS（无 Tailwind / 无 UI 框架）
-- 20 个自研 SVG 图标（参考 Lucide 风格）
+- 21 个自研 SVG 图标（参考 Lucide 风格）
 - 静态部署：GitHub Pages + GitHub Actions
 
 零外部运行时依赖（除 Vue 3 自身），首屏 gzip 约 39KB。
@@ -171,7 +174,7 @@ https://andaoai.github.io/company/?present=1      ← 同效
 | `layout` | string | 必填，从 10 个允许值中选（含 `cases`） |
 | `alt` | boolean | 可选，是否用 `bg-alt` 背景交替 |
 | `kicker` / `title` / `titleAccent` / `desc` | string | 标题区域，titleAccent 自动套 `gradient-text` 样式 |
-| `cards[].icon` | string | 必填，从 20 个 icon 名中选 |
+| `cards[].icon` | string | 必填，从 21 个 icon 名中选 |
 | `cards[].title` / `desc` | string | 卡片标题和描述 |
 | `cards[].items[]` | string[] | （仅 industry）列表项 |
 | `members[]` | object | （仅 team）人物对象，含 avatar/role/name/bio/tags |
