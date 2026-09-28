@@ -778,6 +778,94 @@ line-height: 1.1;
 
 .service-note strong { color: var(--text); font-weight: 600; }
 
+/* 合作第一步：免费上门 → 收费指导 流程条 */
+.service-offer {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto 48px;
+  padding: 22px 28px;
+  background: var(--gradient-soft);
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius-lg);
+}
+
+.offer-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--cyan);
+  padding: 4px 12px;
+  background: rgba(0, 212, 255, 0.1);
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+
+.offer-steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.offer-step {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.offer-step > .icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--primary);
+}
+
+.offer-step-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.offer-step-body p {
+  color: var(--text-dim);
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+
+.offer-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.offer-pill.is-free {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.12);
+}
+
+.offer-pill.is-paid {
+  color: var(--cyan);
+  background: rgba(0, 212, 255, 0.1);
+}
+
+.offer-arrow {
+  position: absolute;
+  top: 50%;
+  right: -26px;
+  transform: translateY(-50%);
+  color: var(--text-dimmer);
+  font-size: 18px;
+  z-index: 1;
+}
+
 /* ============================================================
    Industry
    ============================================================ */
@@ -1100,6 +1188,16 @@ body.present-mode .present-stage { display: flex; }
 .slide-section .service-value { font-size: 10px; line-height: 1.45; padding: 4px 7px; }
 .slide-section .service-note { margin-top: 18px; font-size: 12.5px; }
 
+/* 合作第一步流程条：演示模式压缩排版 */
+.slide-section .service-offer { margin-bottom: 26px; padding: 14px 20px; }
+.slide-section .offer-badge { margin-bottom: 10px; font-size: 10px; padding: 3px 10px; }
+.slide-section .offer-steps { gap: 22px; }
+.slide-section .offer-step > .icon { width: 18px; height: 18px; }
+.slide-section .offer-step-title { font-size: 13px; margin-bottom: 4px; gap: 6px; }
+.slide-section .offer-step-body p { font-size: 11px; line-height: 1.5; }
+.slide-section .offer-pill { font-size: 10px; padding: 1px 7px; }
+.slide-section .offer-arrow { right: -22px; font-size: 15px; }
+
 /* 演示模式下隐藏原网页内容 */
 body.present-mode > .bg-grid,
 body.present-mode > .bg-glow,
@@ -1160,6 +1258,14 @@ body.present-mode .present-ui { display: block; }
   .industry-grid { grid-template-columns: repeat(2, 1fr); }
   .tech-base-grid { grid-template-columns: 1fr; }
   .service-grid { grid-template-columns: repeat(2, 1fr); }
+  .offer-steps { grid-template-columns: 1fr; gap: 22px; }
+  .offer-arrow {
+    top: auto;
+    bottom: -20px;
+    left: 9px;
+    right: auto;
+    transform: rotate(90deg);
+  }
 
   /* 紧凑内边距 */
   .section { padding: 80px 0; }
