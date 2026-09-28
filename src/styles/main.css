@@ -573,18 +573,14 @@ ul { list-style: none; }
 /* ========== Service（服务方式） ========== */
 .service-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  max-width: 1100px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
-/* 第 4、5 张卡居中：横跨起始列，让两个空位对称分布 */
-.service-grid > *:nth-child(4) { grid-column: 1; }
-.service-grid > *:nth-child(5) { grid-column: 2; }
-
 .service-card {
-  padding: 32px;
+  padding: 26px 22px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -991,8 +987,6 @@ ul { list-style: none; }
   .industry-grid { grid-template-columns: repeat(2, 1fr); }
   .tech-base-grid { grid-template-columns: 1fr; }
   .service-grid { grid-template-columns: repeat(2, 1fr); }
-  .service-grid > *:nth-child(4),
-  .service-grid > *:nth-child(5) { grid-column: auto; }
 
   /* 紧凑内边距 */
   .section { padding: 80px 0; }
@@ -1205,25 +1199,25 @@ body.present-mode .present-stage { display: flex; }
 .slide-section .section-title { font-size: clamp(40px, 4.5vw, 60px); }
 .slide-section .section-desc { font-size: 17px; }
 
-/* 服务方式：演示模式下 3 列 3+2，经固定坐标核算总高约 700px，900px 内不溢出 */
+/* 服务方式：演示模式下 5 列并排一行，压缩排版保证 900px 内不溢出 */
 .slide-section .service-grid {
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
   max-width: 1400px;
 }
-.slide-section .service-card { padding: 18px 20px; }
+.slide-section .service-card { padding: 16px 14px; }
 .slide-section .service-card:hover { transform: none; box-shadow: none; }
-.slide-section .service-card-head { margin-bottom: 12px; }
-.slide-section .service-card-head .icon { width: 26px; height: 26px; }
+.slide-section .service-card-head { margin-bottom: 10px; }
+.slide-section .service-card-head .icon { width: 24px; height: 24px; }
 .slide-section .service-tag { display: none; }
-.slide-section .service-title { font-size: 16px; line-height: 1.4; margin-bottom: 8px; }
-.slide-section .service-card p { font-size: 13px; line-height: 1.6; margin-bottom: 10px; }
+.slide-section .service-title { font-size: 14px; line-height: 1.35; margin-bottom: 7px; }
+.slide-section .service-card p { font-size: 11.5px; line-height: 1.55; margin-bottom: 9px; }
 .slide-section .service-value {
-  font-size: 11px;
-  line-height: 1.5;
-  padding: 5px 8px;
+  font-size: 10px;
+  line-height: 1.45;
+  padding: 4px 7px;
 }
-.slide-section .service-note { margin-top: 22px; font-size: 13px; }
+.slide-section .service-note { margin-top: 18px; font-size: 12.5px; }
 
 /* === 隐藏原网页内容（演示模式下不显示） === */
 body.present-mode {

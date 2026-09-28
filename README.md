@@ -79,7 +79,7 @@ npm run preview      # 预览构建产物（默认 http://localhost:4173）
 - `grid-3-contact` — 3 列联系方式
 - `grid-2` — 2 列卡片（含开源项目）
 - `tech-list` — 单列技术项
-- `service-grid` — 3 列服务方式卡（3+2 排列，自动适配演示模式）
+- `service-grid` — 5 列服务方式卡（并排一行，窄屏自动换行）
 - `section-head-only` — 仅标题（用作章节分隔页）
 - `cases` — 落地案例（5 业务路线分组，数据来自 `src/data/cases.json`）
 
