@@ -32,12 +32,18 @@ src/
 │   ├── cards/             # 9 个卡片组件（含 CaseCard / CaseFeatured / ServiceCard）
 │   ├── icons/             # 21 个自研 SVG 图标（参考 Lucide）
 │   └── presenter/         # 演示模式 UI（2 个组件）
+├── assets/
+│   └── cases/             # 案例图片：临时占位 SVG + 后期真实图（同名覆盖）
+├── utils/
+│   └── caseImages.js      # 按 case id 解析图片（真实图优先，占位图兜底）
 ├── composables/
 │   ├── usePresenter.js    # PPT 状态 + 键盘 + URL + resize 监听
 │   └── useScrollSpy.js    # 滚动时高亮当前导航
 ├── styles/main.css        # 全局样式（深色科技感）
 ├── App.vue                # 根组件
 └── main.js                # 入口
+
+scripts/gen_case_placeholders.py   # 重新生成临时占位图的脚本
 ```
 
 ## 本地开发
@@ -162,7 +168,30 @@ https://andaoai.github.io/company/?present=1      ← 同效
 - 21 个自研 SVG 图标（参考 Lucide 风格）
 - 静态部署：GitHub Pages + GitHub Actions
 
-零外部运行时依赖（除 Vue 3 自身），首屏 gzip 约 39KB。
+零外部运行时依赖（除 Vue 3 自身），首屏 gzip 约 45KB（含案例图片）。
+
+## 案例图片（临时占位 → 真实图）
+
+每个案例都有一张图，文件按 **case 的 id 同名**放在 `src/assets/cases/`，解析规则
+（见 [`src/utils/caseImages.js`](src/utils/caseImages.js)）：
+
+1. 数据里显式写了 `image` 字段 → 用它（优先级最高）
+2. `src/assets/cases/<id>.jpg/.png/.webp` → **真实图优先**
+3. `src/assets/cases/<id>.svg` → 临时占位图兜底
+4. 都没有 → `default.svg`
+
+**后期补充真实照片**：把照片命名为与 case id 同名（如 `ocr-test.jpg`）丢进
+`src/assets/cases/` 即可，**无需改任何组件**，重新 build 自动生效。
+真实图较大时 Vite 会输出为独立文件，不会内联进 JS。
+
+占位图由脚本生成（含 15 个路线 case + 精选 hero + default，共 17 张）：
+
+```bash
+python3 scripts/gen_case_placeholders.py
+```
+
+> 普通浏览模式：卡片显示 16:9 缩略图；
+> 演示模式：路线小卡自动隐藏缩略图、精选卡压缩横幅，保证 16:9 幻灯片不溢出。
 
 ## 内容规范
 

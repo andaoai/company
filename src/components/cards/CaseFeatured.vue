@@ -14,6 +14,11 @@
 
         <h3 class="case-featured-title">{{ data.title }}</h3>
 
+        <!-- 精选案例横幅图（临时占位，后期替换真实图） -->
+        <div class="case-featured-banner">
+          <img :src="img" :alt="data.title" loading="lazy" decoding="async" />
+        </div>
+
         <div class="case-featured-section">
           <div class="case-featured-label">痛点</div>
           <p class="case-featured-text">{{ data.problem }}</p>
@@ -47,7 +52,12 @@
 </template>
 
 <script setup>
-defineProps({ data: { type: Object, required: true } })
+import { computed } from 'vue'
+import { caseImage } from '../../utils/caseImages'
+
+const props = defineProps({ data: { type: Object, required: true } })
+
+const img = computed(() => caseImage(props.data.id, props.data.image))
 </script>
 
 <style scoped>
@@ -124,6 +134,27 @@ defineProps({ data: { type: Object, required: true } })
   line-height: 1.3;
   margin: 4px 0 8px;
   letter-spacing: -0.01em;
+}
+
+/* ---- 横幅图 ---- */
+.case-featured-banner {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  aspect-ratio: 16 / 9;
+  background: var(--bg-alt);
+}
+
+.case-featured-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.case-featured:hover .case-featured-banner img {
+  transform: scale(1.03);
 }
 
 .case-featured-section {

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4f8fff" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#4f8fff" stop-opacity="0.04"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#4f8fff" stroke-opacity="0.10" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="640" height="360" fill="#0d0d1a"/>
+  <rect width="640" height="360" fill="url(#grid)"/>
+  <rect width="640" height="360" fill="url(#g)"/>
+  <rect x="0.5" y="0.5" width="639" height="359" fill="none" stroke="#4f8fff" stroke-opacity="0.35"/>
+  <g transform="translate(292 78) scale(6.5)" fill="none" stroke="#4f8fff" stroke-width="1.4"
+     stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/></g>
+  <text x="320" y="262" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif"
+     font-size="26" font-weight="600" fill="#e8e8f0">冻干瓶（西林瓶）缺陷检测</text>
+  <text x="320" y="296" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif"
+     font-size="15" fill="#8a8a9e">医药包装 · 项目现场图</text>
+  <text x="320" y="326" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif"
+     font-size="12" fill="#5a5a6e">临时占位图 · 后期替换为真实图片</text>
+</svg>
